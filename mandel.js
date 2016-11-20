@@ -61,7 +61,7 @@
         }
         // var hue = (1 + di - Math.log(Math.log(Math.abs(Math.sqrt(zr * zr + zi * zi)))) / Math.log(2) / Math.log(2)) / n;
         var hue = di + 1 - Math.log(Math.log(Math.sqrt(zr * zr + zi * zi))/ Math.log(2));
-        return hsv2rgb(Math.tan(di/n), 1.0 * Math.log(di/n), 6 / hue);
+        return hsv2rgb( hue /120, 1.0 * Math.log(di/n), 6 / hue);
     }
 
     function hsv2rgb(h, s, v) {
