@@ -59,8 +59,9 @@
                 a: 0
             };
         }
-        var hue = (1 + di - Math.log(Math.log(Math.abs(zr * zi))) / Math.log(2) / Math.log(2)) / n;
-        return hsv2rgb(hue, 1.0, 10.0 * hue);
+        // var hue = (1 + di - Math.log(Math.log(Math.abs(Math.sqrt(zr * zr + zi * zi)))) / Math.log(2) / Math.log(2)) / n;
+        var hue = di + 1 - Math.log(Math.log(Math.sqrt(zr * zr + zi * zi))/ Math.log(2));
+        return hsv2rgb(Math.tan(di/n), 1.0 * Math.log(di/n), 6 / hue);
     }
 
     function hsv2rgb(h, s, v) {
