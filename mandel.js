@@ -7,7 +7,7 @@
 
     var height = window.innerHeight;
 
-    var escapeBoundary = 2.0;
+    var escapeBoundary = 20;
     var squaredBoundary = escapeBoundary * escapeBoundary;
     var ymax = 1.0;
     var ymin = -1.0;
@@ -33,7 +33,7 @@
         //x*x2 + (x*y2 + y*x2) + y*y2 * -1
         //x + x2 y + y22
 
-        while (i < maxit && znorm < squaredBoundary) {
+        while (i < maxit && znorm <= squaredBoundary) {
             // quicker way :)
             var zr2 = zr * zr - zi * zi + cr;
             zi = 2 * zr * zi + ci;
@@ -53,15 +53,14 @@
     function getColor(n, di, zr, zi) {
         if (n === di) {
             return {
-                r: 0,
-                g: 0,
-                b: 0,
-                a: 0
+                r: 255,
+                g: 255,
+                b: 255,
+                a: 255
             };
         }
-        // var hue = (1 + di - Math.log(Math.log(Math.abs(Math.sqrt(zr * zr + zi * zi)))) / Math.log(2) / Math.log(2)) / n;
         var hue = di + 1 - Math.log(Math.log(Math.sqrt(zr * zr + zi * zi))/ Math.log(2));
-        return hsv2rgb( hue /120, 1.0 * Math.log(di/n), 6 / hue);
+        return hsv2rgb( 360 * Math.log(hue)/n, 1,10*hue/n);
     }
 
     function hsv2rgb(h, s, v) {
@@ -101,9 +100,9 @@
         rgb[1] *= 255;
         rgb[2] *= 255;
         return {
-            r: rgb[0],
-            g: rgb[1],
-            b: rgb[2],
+            r: rgb[0] > 255 ? 255:rgb[0],
+            g: rgb[1]> 255 ? 255:rgb[1],
+            b: rgb[2]> 255 ? 255:rgb[2],
             a: 255
         };
     }
@@ -137,8 +136,8 @@
             var y = getY(yp);
             while (xp < width) {
                 var x = getX(xp);
-                var result = goMandelGo(x, y, 85);
-                var color = getColor(85, result.n, result.r, result.i);
+                var result = goMandelGo(x, y, 350);
+                var color = getColor(350, result.n, result.r, result.i);
                 drawPixel(xp, color);
                 xp++;
             }
